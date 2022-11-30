@@ -68,7 +68,7 @@ WARNING: Kubernetes configuration file is world-readable. This is insecure. Loca
 version.BuildInfo{Version:"v3.10.2", GitCommit:"50f003e5ee8704ec937a756c646870227d7c8b58", GitTreeState:"clean", GoVersion:"go1.18.8"}
 ```
 # Add Helm Repo for Pulsar
-This demo/example will use DataStax's Luna Streaming 
+This demo/example will use [DataStax's Luna Streaming](https://docs.datastax.com/en/luna-streaming/docs/quickstart-helm-installs.html)
 ```
 mylaptop@DESKTOP:~$helm repo add datastax-pulsar https://datastax.github.io/pulsar-helm-chart
 mylaptop@DESKTOP:~$

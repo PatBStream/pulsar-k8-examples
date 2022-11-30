@@ -1,5 +1,7 @@
 - [After Pulsar Install](#after-pulsar-install)
   - [View the K8 Pods:](#view-the-k8-pods)
+  - [Access Pulsar-Admin and Pulsar-Shell](#access-pulsar-admin-and-pulsar-shell)
+  - [Enable "JMS" support in Pulsar-Admin and Pulsar-Shell](#enable-jms-support-in-pulsar-admin-and-pulsar-shell)
   - [Troubleshooting steps and workarounds](#troubleshooting-steps-and-workarounds)
 
 # After Pulsar Install
@@ -42,6 +44,22 @@ mylaptop@DESKTOP:~$ minikube tunnel
 
 ```
 
+## Access Pulsar-Admin and Pulsar-Shell
+Pulsar-Admin and Pulsar-Shell access is available from the "pulsar-bastion-nnnn-nnn" pod.  To use this tools, start a interactive terminal session using kubectl.
+```
+mylaptop@DESKTOP:~$ kubectl exec -it -n pulsar pulsar-bastion-74c8fd8f-wx9zc -- /bin/bash
+I have no name!@pulsar-bastion-74c8fd8f-wx9zc:/pulsar$ bin/pulsar-admin
+
+```
+## Enable "JMS" support in Pulsar-Admin and Pulsar-Shell
+Once in the session from the pulsar-bastion pod, goto **conf** directory to manually edit the **client.conf** file to enable JMS support in these tools.
+
+NOTE:  To enable "jms" support in pulsar-admin and pulsar-shell, update file conf/client.conf parameters:
+```
+#Pulsar Admin Custom Commands
+customCommandFactoriesDirectory=commandFactories
+customCommandFactories=jms
+```
 
 ## Troubleshooting steps and workarounds
 
@@ -69,7 +87,7 @@ Events:
   Warning  Failed     18m                 kubelet            Error: ImagePullBackOff
   Warning  Failed     2m9s (x2 over 18m)  kubelet            Failed to pull image "apachepulsar/pulsar-all:2.10.2": rpc error: code = Unknown desc = context deadline exceeded
 ```
-If this error occurs, try **pre downloading** the **images** into Minikube.
+**IMPORTANT:** If this error occurs, try **pre downloading** the **images** into Minikube.
 ```
 mylaptop@DESKTOP:~$ minikube image pull apachepulsar/pulsar-all:2.10.2 
 ```
