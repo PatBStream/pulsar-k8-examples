@@ -3,6 +3,7 @@
   - [Access Pulsar-Admin and Pulsar-Shell](#access-pulsar-admin-and-pulsar-shell)
   - [Enable "JMS" support in Pulsar-Admin and Pulsar-Shell](#enable-jms-support-in-pulsar-admin-and-pulsar-shell)
   - [Troubleshooting steps and workarounds](#troubleshooting-steps-and-workarounds)
+- [Example Helm Value Override with Pulsar HeartBeat](#example-helm-value-override-with-pulsar-heartbeat)
 
 # After Pulsar Install
 
@@ -49,7 +50,10 @@ Pulsar-Admin and Pulsar-Shell access is available from the "pulsar-bastion-nnnn-
 ```
 mylaptop@DESKTOP:~$ kubectl exec -it -n pulsar pulsar-bastion-74c8fd8f-wx9zc -- /bin/bash
 I have no name!@pulsar-bastion-74c8fd8f-wx9zc:/pulsar$ bin/pulsar-admin
-
+```
+Or with command:
+```
+mylaptop@DESKTOP:~$ kubectl exec -n pulsar -it $(kubectl get pods -n pulsar -l "component=bastion" -o jsonpath="{.items[0].metadata.name}") -- bash
 ```
 ## Enable "JMS" support in Pulsar-Admin and Pulsar-Shell
 Once in the session from the pulsar-bastion pod, goto **conf** directory to manually edit the **client.conf** file to enable JMS support in these tools.
@@ -103,4 +107,17 @@ k8s.gcr.io/pause:3.4.1
 .
 .
 .
+```
+# Example Helm Value Override with Pulsar HeartBeat
+You can use a **value** file to override default values in Pulsar Helm chart, to configure specific options.  For example, configure Pulsar HeartBeat to use a specific Pulsar topic and message size settings.
+
+An example of this is in file [dev-heartbeat-config.yaml](helm-values/dev-heartbeat-config.yaml)
+```
+pulsarHeartbeat:
+  component: pulsarheartbeat
+  config:
+    latencyTest:
+      intervalSeconds: 10
+      topicName: "persistent://public/default/pubsub-lat-test"
+      
 ```

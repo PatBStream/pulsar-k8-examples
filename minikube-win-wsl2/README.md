@@ -30,10 +30,11 @@ Client: Docker Engine - Community
 
 # Setup Minikube
 Download minikube for Linux:
+```
 curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
 cd /usr/local/bin
 sudo ln -s ~/minikube/minikube-linux-amd64 minikube
-
+```
 Run minikube with parameters:
 ```
 minikube start --memory=8192 --cpus=4 --kubernetes-version=v1.21.1
@@ -56,9 +57,11 @@ mylaptop@DESKTOP:~$ minikube start --memory=8192 --cpus=4
 
 # Setup Helm
 Download and install Helm:
+```
 wget https://get.helm.sh/helm-v3.10.2-linux-amd64.tar.gz
 tar xvf helm-v3.10.2-linux-amd64.tar.gz
 sudo mv linux-amd64/helm /usr/local/bin/helm
+```
 
 Run Helm to verify installation:
 ```
@@ -81,7 +84,9 @@ datastax-pulsar https://datastax.github.io/pulsar-helm-chart
 ```
 # Install Pulsar using Helm 
 Download example Helm chart "dev-values.yaml" file from DataStax at: [https://github.com/datastax/pulsar-helm-chart/tree/master/examples](https://github.com/datastax/pulsar-helm-chart/tree/master/examples)
-We'll use this Helm file for our demo.
+
+Or download file [dev-values-pulsar-2.10.5.yaml](helm-values/dev-values-pulsar-2.10.5.yaml) to use Pulsar 2.10.5 and to see how to change Pulsar versions within the Helm **values** file.
+
 
 Next, run Helm with the local dev-values.yaml file:
 ```
