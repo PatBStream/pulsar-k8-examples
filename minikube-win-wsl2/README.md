@@ -3,11 +3,16 @@
 - [Setup Minikube](#setup-minikube)
 - [Setup Helm](#setup-helm)
 - [Add Helm Repo for Pulsar](#add-helm-repo-for-pulsar)
-- [Install Pulsar using Helm](#install-pulsar-using-helm)
+- [Install Pulsar using Helm (no security)](#install-pulsar-using-helm-no-security)
+- [Install Pulsar using Helm (with security, self-signed certs)](#install-pulsar-using-helm-with-security-self-signed-certs)
+- [Cleanup and remove Pulsar and Minikube](#cleanup-and-remove-pulsar-and-minikube)
 # Intro
 This doc will describe the setup and install of **Apache Pulsar** on Windows 11 with Windows Subsystem for Linux (WSL2), using **"[minikube](https://minikube.sigs.k8s.io/docs/start/)"** as the K8s env.
 
 After the installation steps, goto [Running Pulsar](RUN-README.md) for more examples, demos, and troubleshooting items.
+
+**OR**
+Setup Pulsar Cluster with security enabled.  Follow the steps below, then goto [Running Pulsar with security](RUN-SECURE-README.md) for further details on access and examples.
 
 ## Assumptions
 
@@ -73,7 +78,7 @@ version.BuildInfo{Version:"v3.10.2", GitCommit:"50f003e5ee8704ec937a756c64687022
 # Add Helm Repo for Pulsar
 This demo/example will use [DataStax's Luna Streaming](https://docs.datastax.com/en/luna-streaming/docs/quickstart-helm-installs.html)
 ```
-mylaptop@DESKTOP:~$helm repo add datastax-pulsar https://datastax.github.io/pulsar-helm-chart
+mylaptop@DESKTOP:~$ helm repo add datastax-pulsar https://datastax.github.io/pulsar-helm-chart
 mylaptop@DESKTOP:~$
 mylaptop@DESKTOP:~$ helm repo list
 WARNING: Kubernetes configuration file is group-readable. This is insecure. Location: /home/pat/.kube/config
@@ -82,13 +87,29 @@ NAME            URL
 datastax-pulsar https://datastax.github.io/pulsar-helm-chart
 
 ```
-# Install Pulsar using Helm 
+# Install Pulsar using Helm (no security)
 Download example Helm chart "dev-values.yaml" file from DataStax at: [https://github.com/datastax/pulsar-helm-chart/tree/master/examples](https://github.com/datastax/pulsar-helm-chart/tree/master/examples)
 
 Or download file [dev-values-pulsar-2.10.5.yaml](helm-values/dev-values-pulsar-2.10.5.yaml) to use Pulsar 2.10.5 and to see how to change Pulsar versions within the Helm **values** file.
 
 
-Next, run Helm with the local dev-values.yaml file:
+Next, run Helm with the local dev values.yaml file:
 ```
-mylaptop@DESKTOP:~$ helm install pulsar -f dev-values.yaml datastax-pulsar/pulsar
+mylaptop@DESKTOP:~$ helm install pulsar datastax-pulsar/pulsar --namespace pulsar --create-namespace -f dev-values-pulsar-2.10.5.yaml
 ```
+# Install Pulsar using Helm (with security, self-signed certs)
+Download file [dev-auth-selfsign-tls.yaml](helm-values/dev-auth-selfsign-tls.yaml) to use Pulsar 2.10.5 with security enabled using self-signed certs.
+
+**IMPORTANT** Must load the Cert-Manager CRDs before running Helm install
+After Minikube cluster is running normally, enter these command to setup Pulsar with security enabled.
+```
+mylaptop@DESKTOP:~$ kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.8.0/cert-manager.crds.yaml
+mylaptop@DESKTOP:~$ helm install pulsar datastax-pulsar/pulsar --namespace pulsar --create-namespace -f dev-auth-selfsign-tls.yaml
+```
+# Cleanup and remove Pulsar and Minikube  
+To cleanup and remove the Pulsar Cluster and Minikube env, run the command:
+```
+mylaptop@DESKTOP:~$ minikube delete --all
+```
+
+

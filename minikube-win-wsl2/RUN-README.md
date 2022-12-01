@@ -3,6 +3,8 @@
   - [Access Pulsar-Admin and Pulsar-Shell](#access-pulsar-admin-and-pulsar-shell)
   - [Enable "JMS" support in Pulsar-Admin and Pulsar-Shell](#enable-jms-support-in-pulsar-admin-and-pulsar-shell)
   - [Troubleshooting steps and workarounds](#troubleshooting-steps-and-workarounds)
+- [Access Pulsar Admin Console](#access-pulsar-admin-console)
+- [Access Grafana Dashboards](#access-grafana-dashboards)
 - [Example Helm Value Override with Pulsar HeartBeat](#example-helm-value-override-with-pulsar-heartbeat)
 
 # After Pulsar Install
@@ -108,6 +110,18 @@ k8s.gcr.io/pause:3.4.1
 .
 .
 ```
+# Access Pulsar Admin Console
+Access Pulsar Admin Console from a localhost browser.
+
+**IMPORTANT** Must run "minikube tunnel" before access
+
+URL for Pulsar Admin Console:  http://localhost
+# Access Grafana Dashboards
+Access Grafana Dashboards from a localhost browser.
+
+**IMPORTANT** Must run "minikube tunnel" before access
+URL for Grafana:  http://localhost:3000
+
 # Example Helm Value Override with Pulsar HeartBeat
 You can use a **value** file to override default values in Pulsar Helm chart, to configure specific options.  For example, configure Pulsar HeartBeat to use a specific Pulsar topic and message size settings.
 
