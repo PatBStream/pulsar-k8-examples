@@ -1,8 +1,8 @@
-# pulsar-k8-examples
-Examples and HowTos for deploying Pulsar on K8
+# Demo and Examples for Deploying Pulsar in K8 environments
+This repo documents the steps for installing and deploying Pulsar in Kubernetes (K8) environments.  It includes examples and HowTos for common K8s, like "minikube" and Public Clouds.  
 
-Over time, this repo will add detail steps and HowTo for
-* [Minikube](minikube-win-wsl2/README.md) on Windows Subsystem for Linux (WSL2)
-* [GKE](gke/README.md)
-* AKE
-* AWS EKS
+See below for details on Pulsar on K8:
+* [Minikube](minikube-win-wsl2/README.md) 
+* [Google GKE](gke/README.md)
+* Azure AKE (Coming soon)
+* AWS EKS (Coming soon)

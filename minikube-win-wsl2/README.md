@@ -16,8 +16,8 @@ Setup Pulsar Cluster with security enabled.  Follow the steps below, then goto [
 
 ## Assumptions
 
-* Windows 11 with WSL2 installed and running.
-* DockerDesktop for Windows with WSL2 extension, open WSL2 Ubuntu command window:
+* Linux OS, like Windows 11 with WSL2 installed and running.
+* Docker or DockerDesktop for Windows with WSL2 extension, open WSL2 Ubuntu command window:
 ```
 mylaptop@DESKTOP:~$ docker version
 Client: Docker Engine - Community

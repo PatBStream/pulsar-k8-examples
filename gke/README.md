@@ -17,7 +17,7 @@ Setup Pulsar Cluster with security enabled.  Follow the steps below, then goto [
 Google Cloud account with permissions to setup and manage a GKE cluster.
 "gcloud" CLI install and setup to access your GCP account. See install info at: [https://cloud.google.com/sdk/docs/install](https://cloud.google.com/sdk/docs/install)
 
-NOTE - Permissions for GKE require "Owner" in your GCP Project <<project-name>> otherwise some errors may occur while using Helm install, related to RBAC for K8.
+**NOTE** - Permissions for GKE require "Owner" in your GCP Project <<project-name>> otherwise some errors may occur while using Helm install, related to RBAC for K8.
 
 ```
 mylaptop@DESKTOP:~$ helm install pulsar datastax-pulsar/pulsar -f dev-latest-values.yaml
