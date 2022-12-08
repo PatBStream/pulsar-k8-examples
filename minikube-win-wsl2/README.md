@@ -6,6 +6,7 @@
 - [Install Pulsar using Helm (no security)](#install-pulsar-using-helm-no-security)
 - [Install Pulsar using Helm (with security, self-signed certs)](#install-pulsar-using-helm-with-security-self-signed-certs)
 - [Cleanup and remove Pulsar and Minikube](#cleanup-and-remove-pulsar-and-minikube)
+- [Demos and Example with Pulsar on minikube](#demos-and-example-with-pulsar-on-minikube)
 # Intro
 This doc will describe the setup and install of **Apache Pulsar** on Windows 11 with Windows Subsystem for Linux (WSL2), using **"[minikube](https://minikube.sigs.k8s.io/docs/start/)"** as the K8s env.
 
@@ -111,5 +112,11 @@ To cleanup and remove the Pulsar Cluster and Minikube env, run the command:
 ```
 mylaptop@DESKTOP:~$ minikube delete --all
 ```
+# Demos and Example with Pulsar on minikube
+After the installation steps, goto [Running Pulsar](RUN-README.md) for more examples, demos, and troubleshooting items.  
+[Running Pulsar with Demos and Examples](RUN-README.md)  
+  
+Setup Pulsar Cluster with security enabled.  Follow the install steps above, then goto [Running Pulsar with security](RUN-SECURE-README.md) for further details on access and examples.  
 
+[Running Pulsar with security](RUN-SECURE-README.md)  
 
