@@ -1,6 +1,6 @@
 - [Intro](#intro)
   - [Assumptions](#assumptions)
-- [Setup GKE Cluster with **gcloud**](#setup-gke-cluster-with-gcloud)
+- [Create a GKE Cluster with **gcloud**](#create-a-gke-cluster-with-gcloud)
 - [Setup Pulsar](#setup-pulsar)
 - [Testing Pulsar on GKE](#testing-pulsar-on-gke)
   - [View GKE Pods and Services, External IPs](#view-gke-pods-and-services-external-ips)
@@ -25,7 +25,7 @@ Error: INSTALLATION FAILED: failed pre-install: clusterroles.rbac.authorization.
 ```
 If this error above occurs, you do not have full permissions for GCP project and GKE.  See the GCP Console website, IAM screen for your account permissions.  It will need "Owner" permission.
 
-# Setup GKE Cluster with **gcloud**
+# Create a GKE Cluster with **gcloud**
 Below is the gcloud command to create a GKE Cluster named "mygketest" with 7 nodes in GCP Project "myproject".
 ```
 mylaptop@DESKTOP:~$ gcloud container --project "myproject" clusters create "mygketest" --zone "us-central1-c" --no-enable-basic-auth --cluster-version "1.23.12-gke.100" --release-channel "regular" --machine-type "e2-medium" --image-type "COS_CONTAINERD" --disk-type "pd-standard" --disk-size "100" --metadata disable-legacy-endpoints=true --scopes "https://www.googleapis.com/auth/devstorage.read_only","https://www.googleapis.com/auth/logging.write","https://www.googleapis.com/auth/monitoring","https://www.googleapis.com/auth/servicecontrol","https://www.googleapis.com/auth/service.management.readonly","https://www.googleapis.com/auth/trace.append" --max-pods-per-node "110" --num-nodes "7" --logging=SYSTEM,WORKLOAD --monitoring=SYSTEM --enable-ip-alias --network "projects/myproject/global/networks/default" --subnetwork "projects/myproject/regions/us-central1/subnetworks/default" --no-enable-intra-node-visibility --default-max-pods-per-node "110" --no-enable-master-authorized-networks --addons HorizontalPodAutoscaling,HttpLoadBalancing,GcePersistentDiskCsiDriver --enable-autoupgrade --enable-autorepair --max-surge-upgrade 1 --max-unavailable-upgrade 0 --enable-shielded-nodes --node-locations "us-central1-c"
