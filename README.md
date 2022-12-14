@@ -5,4 +5,4 @@ See below for details on Pulsar on K8:
 * [Minikube](minikube-win-wsl2/README.md) 
 * [Google GKE](gke/README.md)
 * Azure AKE (Coming soon)
-* AWS EKS (Coming soon)
+* [AWS EKS](aws-eks/README.md)
