@@ -8,6 +8,8 @@
   - [Setup Service Account for Persistent](#setup-service-account-for-persistent)
 - [Install Pulsar](#install-pulsar)
 - [View EKS Pods, Services, and External IPs](#view-eks-pods-services-and-external-ips)
+- [Cleanup and delete Pulsar](#cleanup-and-delete-pulsar)
+- [Troubleshooting issues](#troubleshooting-issues)
 
 # Intro
 This doc will describe the setup and install of **Apache Pulsar** on AWS EKS Kubernetes.
@@ -40,7 +42,6 @@ After logging into AWS in your environment (), use "eksctl" to create a new K8 c
 
 ```
 mylaptop@DESKTOP:~$ eksctl create cluster --name mydemo --nodes 4 --kubeconfig=aws-config --node-volume-type=gp2
-
 ```
 This command will run for several minutes, usually 7 to 10 minutes, depending on your environment.  
 **NOTE** This command writes the "kubeconfig" information to a file named "aws-config".  You can remove this parameter, which will then update the default "kubeconfig" file.  
@@ -48,7 +49,6 @@ This command will run for several minutes, usually 7 to 10 minutes, depending on
 If you use "aws-config" file, you should set environment variable to use it:  
 ```
 mylaptop@DESKTOP:~$ export KUBECONFIG=~/mydir/aws-config
-
 ```
 # Setup and enable Persistent in EKS
 Several steps and commands are required to enable "persistent volumes" in EKS.  Each step is required and must complete successfully.  If not, any "persistent volume claims" (pvc) will show as "pending" in kubectl.  
@@ -56,24 +56,21 @@ Several steps and commands are required to enable "persistent volumes" in EKS.  
 ## Check and obtain the OIDC ID from AWS (3 commands below)
 ```
 mylaptop@DESKTOP:~$ oidc_id=$(aws eks describe-cluster --name mydemo --region us-west-2 --query "cluster.identity.oidc.issuer" --output text | cut -d '/' -f 5)
-
+mylaptop@DESKTOP:~$
 mylaptop@DESKTOP:~$ aws iam list-open-id-connect-providers | grep $oidc_id
-
+mylaptop@DESKTOP:~$
 mylaptop@DESKTOP:~$ eksctl utils associate-iam-oidc-provider --cluster pbdemo --approve
-
 ```
 ## Setup Service Account for Persistent
 Create a Service Account to allow access and permission to EBS volumes.
 ```
 mylaptop@DESKTOP:~$ eksctl create iamserviceaccount --name ebs-csi-controller-sa --namespace kube-system --cluster mydemo  --attach-policy-arn arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy --approve --role-only --role-name AmazonEKS_EBS_CSI_DriverRole
-
 ```
 Next, create "addon" for EBS.  **NOTE** replace "NNNNNNNNNNNN" with your AWS Account number below.
 ```
 mylaptop@DESKTOP:~$ eksctl create addon --name aws-ebs-csi-driver --cluster mydemo --service-account-role-arn arn:aws:iam::NNNNNNNNNNNN:role/AmazonEKS_EBS_CSI_DriverRole
-
+mylaptop@DESKTOP:~$
 mylaptop@DESKTOP:~$ kubectl annotate serviceaccount ebs-csi-controller-sa -n kube-system  eks.amazonaws.com/role-arn=arn:aws:iam::NNNNNNNNNNN:role/AmazonEKS_EBS_CSI_DriverRole
-
 ```
 # Install Pulsar
 After completing the steps for OIDC ID and enabling Persistent in EKS, we can now install Pulsar using Helm.
@@ -96,5 +93,23 @@ pulsar-bastion-65d5697d64-j9n7t                        1/1     Running     0    
 .
 mylaptop@DESKTOP:~$
 ```
+# Cleanup and delete Pulsar
+(TODO - cleanup and removal of Persistent Volumes.  Command below does NOT remove PVs)
+
+```
+mylaptop@DESKTOP:~$ eksctl delete cluster --name=mydemo --region=us-west-2 --wait
+```
+# Troubleshooting issues
+For "pending volume" or "pending pod" conditions, see Troubleshooting guide at [Troubleshooting EKS Pod Pending issues:
+https://aws.amazon.com/premiumsupport/knowledge-center/eks-troubleshoot-ebs-volume-mounts/
+](Troubleshooting EKS Pod Pending issues:
+https://aws.amazon.com/premiumsupport/knowledge-center/eks-troubleshoot-ebs-volume-mounts/
+)  
+  
+Details on using and setup of EBS Persistent in EKS, see [And here:
+https://docs.aws.amazon.com/eks/latest/userguide/managing-ebs-csi.html
+](And here:
+https://docs.aws.amazon.com/eks/latest/userguide/managing-ebs-csi.html
+)  
 
 
