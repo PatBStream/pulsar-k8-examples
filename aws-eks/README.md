@@ -94,7 +94,9 @@ pulsar-bastion-65d5697d64-j9n7t                        1/1     Running     0    
 mylaptop@DESKTOP:~$
 ```
 # Cleanup and delete Pulsar
-(TODO - cleanup and removal of Persistent Volumes.  Command below does NOT remove PVs)
+TODO - cleanup and removal of Persistent Volumes.  Command below does NOT remove PVs.  See issue with eksctl [https://github.com/kubernetes-sigs/aws-ebs-csi-driver/issues/1301](https://github.com/kubernetes-sigs/aws-ebs-csi-driver/issues/1301)  
+ 
+You must manually delete EBS volumes until this issue is fixed.  See EC2 Dashboard, Volumes sections for a list of PV and actions to remove/delete.  
 
 ```
 mylaptop@DESKTOP:~$ eksctl delete cluster --name=mydemo --region=us-west-2 --wait
