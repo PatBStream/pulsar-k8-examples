@@ -10,7 +10,7 @@
 # Intro
 This doc will describe the setup and install of **Apache Pulsar** on Windows 11 with Windows Subsystem for Linux (WSL2), using **"[minikube](https://minikube.sigs.k8s.io/docs/start/)"** as the K8s env.
 
-After the installation steps, goto [Running Pulsar](RUN-README.md) for more examples, demos, and troubleshooting items.
+After the installation, goto [Running Pulsar](RUN-README.md) for more examples, demos, and troubleshooting items.
 
 **OR**
 Setup Pulsar Cluster with security enabled.  Follow the steps below, then goto [Running Pulsar with security](RUN-SECURE-README.md) for further details on access and examples.
