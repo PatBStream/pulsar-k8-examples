@@ -13,57 +13,67 @@ Verify the K8 Pods are running with no errors.
 ```
 mylaptop@DESKTOP:~$ kubectl get pods -n pulsar
 NAME                                                   READY   STATUS      RESTARTS   AGE
-prometheus-pulsar-kube-prometheus-sta-prometheus-0     2/2     Running     0          72m
-pulsar-adminconsole-7644d8ddfb-hhwx4                   1/1     Running     0          74m
-pulsar-autorecovery-5c6b44c95-gmp6r                    1/1     Running     0          74m
-pulsar-bastion-bb8c6dfd6-mpgdg                         1/1     Running     0          74m
-pulsar-bookkeeper-0                                    1/1     Running     0          74m
-pulsar-broker-0                                        1/1     Running     0          74m
-pulsar-cert-manager-8cb7499bb-hxxgf                    1/1     Running     0          74m
-pulsar-cert-manager-cainjector-75d587fdb9-qxrt7        1/1     Running     0          74m
-pulsar-cert-manager-webhook-788994dcf6-kvchj           1/1     Running     0          74m
-pulsar-function-0                                      2/2     Running     0          74m
-pulsar-grafana-ff56446c5-xk2qm                         3/3     Running     0          74m
-pulsar-kube-prometheus-sta-operator-6bc54f689d-hptbg   1/1     Running     0          74m
-pulsar-kube-state-metrics-698f886fd5-tcgxh             1/1     Running     0          74m
-pulsar-prometheus-node-exporter-tstq7                  1/1     Running     0          74m
-pulsar-proxy-8f9c4d4db-hv9rq                           3/3     Running     0          74m
-pulsar-pulsarheartbeat-857cfc8dc5-nbbth                1/1     Running     0          74m
-pulsar-zookeeper-0                                     1/1     Running     0          74m
-pulsar-zookeeper-metadata-jnh8x                        0/1     Completed   0          74m
-```
-After all Pods are running and/or completed, run minikube tunnel command to access Pulsar Admin, Pulsar Proxy, and Grafana/Prometheus Dashboards.
+prometheus-pulsar-kube-prometheus-sta-prometheus-0     2/2     Running     0          9m39s
+pulsar-bookie-0                                        1/1     Running     0          9m54s
+pulsar-bookie-init-vf6wg                               0/1     Completed   0          9m54s
+pulsar-broker-0                                        1/1     Running     0          9m54s
+pulsar-grafana-78f54fcd4d-xf7g4                        3/3     Running     0          9m54s
+pulsar-kube-prometheus-sta-operator-6b69d65dfd-47qrb   1/1     Running     0          9m54s
+pulsar-kube-state-metrics-67945fc86b-98g47             1/1     Running     0          9m54s
+pulsar-prometheus-node-exporter-zpfz2                  1/1     Running     0          9m54s
+pulsar-proxy-0                                         1/1     Running     0          9m54s
+pulsar-pulsar-init-smwpq                               0/1     Completed   0          9m54s
+pulsar-pulsar-manager-0                                1/1     Running     0          9m54s
+pulsar-pulsar-manager-init-pdxg9                       0/1     Completed   0          9m54s
+pulsar-toolset-0                                       1/1     Running     0          9m54s
+pulsar-zookeeper-0                                     1/1     Running     0          9m54s
+
+mylaptop@DESKTOP:~$ kubectl get secret -n pulsar
+NAME                                                            TYPE                 DATA   AGE
+prometheus-pulsar-kube-prometheus-sta-prometheus                Opaque               1      11m
+prometheus-pulsar-kube-prometheus-sta-prometheus-tls-assets-0   Opaque               1      11m
+prometheus-pulsar-kube-prometheus-sta-prometheus-web-config     Opaque               1      11m
+pulsar-ca-tls                                                   kubernetes.io/tls    3      11m
+pulsar-grafana                                                  Opaque               3      11m
+pulsar-kube-prometheus-sta-admission                            Opaque               3      11m
+pulsar-mini-token-admin                                         Opaque               2      16m
+pulsar-mini-token-asymmetric-key                                Opaque               2      17m
+pulsar-mini-token-broker-admin                                  Opaque               2      17m
+pulsar-mini-token-proxy-admin                                   Opaque               2      17m
+pulsar-pulsar-manager-secret                                    Opaque               4      11m
+pulsar-tls-bookie                                               kubernetes.io/tls    3      11m
+pulsar-tls-broker                                               kubernetes.io/tls    3      11m
+pulsar-tls-proxy                                                kubernetes.io/tls    3      11m
+pulsar-tls-recovery                                             kubernetes.io/tls    3      11m
+pulsar-tls-toolset                                              kubernetes.io/tls    3      11m
+pulsar-tls-zookeeper                                            kubernetes.io/tls    3      11m
+pulsar-token-admin                                              Opaque               2      16m
+pulsar-token-asymmetric-key                                     Opaque               2      16m
+pulsar-token-broker-admin                                       Opaque               2      16m
+pulsar-token-proxy-admin                                        Opaque               2      16m
+sh.helm.release.v1.pulsar.v1                                    helm.sh/release.v1   1      11m
 
 ```
-mylaptop@DESKTOP:~$ minikube tunnel
-✅  Tunnel successfully started
+**NOTE** - If TLS is enabled correctly, you will see "pulsar-tls..." in the list of secrets from K8.
 
-📌  NOTE: Please do not close this terminal as this process must stay alive for the tunnel to be accessible ...
-
-❗  The service/ingress pulsar-adminconsole requires privileged ports to be exposed: [80 443]
-🔑  sudo permission will be asked for it.
-🏃  Starting tunnel for service pulsar-adminconsole.
-🏃  Starting tunnel for service pulsar-grafana.
-🏃  Starting tunnel for service pulsar-proxy.
+After all Pods are running and/or completed, run minikube service command to access Pulsar Manager, Pulsar Proxy, and Grafana/Prometheus Dashboards.
 
 ```
+mylaptop@DESKTOP:~$ minikube service pulsar-grafana -n pulsar
 
+```
+## Note About Pulsar Manager and TLS
+If your Pulsar Cluster has TLS enabled, additional setup of Pulsar Manager is needed.  Refer to [Pulsar Manager](https://github.com/apache/pulsar-manager/blob/master/README.md) docs for details.
 ## Access Pulsar-Admin and Pulsar-Shell
-Pulsar-Admin and Pulsar-Shell access is available from the "pulsar-bastion-nnnn-nnn" pod.  To use this tools, start a interactive terminal session using kubectl.
+Pulsar-Admin and Pulsar-Shell access is available from the "pulsar-toolset-0" pod.  To use this tools, start a interactive terminal session using kubectl.
 ```
-mylaptop@DESKTOP:~$ kubectl exec -n pulsar -it $(kubectl get pods -n pulsar -l "component=bastion" -o jsonpath="{.items[0].metadata.name}") -- bash
+mylaptop@DESKTOP:~$ kubectl exec -it -n pulsar pulsar-toolset-0 -- /bin/bash
+
 ```
-# Access Pulsar Admin Console
-Access Pulsar Admin Console from a localhost browser.
-
-**IMPORTANT** Must run "minikube tunnel" before access
-
-URL for Pulsar Admin Console:  https://localhost:443
 # Access Grafana Dashboards
 Access Grafana Dashboards from a localhost browser.
 
-**IMPORTANT** Must run "minikube tunnel" before access
-URL for Grafana:  http://localhost:3000
+**IMPORTANT** Must run "minikube service" before access, minikube service pulsar-grafana -n pulsar
 
 ## Troubleshooting steps and workarounds
 For troubleshooting steps and guidelines, see [RUN-README](RUN-README.md) section on **Troubleshooting steps and workarounds**.

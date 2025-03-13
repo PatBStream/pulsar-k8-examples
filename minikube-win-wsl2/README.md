@@ -154,13 +154,13 @@ NOTES:
 Thank you for installing Apache Pulsar Helm chart version 3.9.0.
 ```
 # Install Pulsar using Helm (with security, self-signed certs)
-Download file [dev-auth-selfsign-tls.yaml](helm-values/dev-auth-selfsign-tls.yaml) to use Pulsar 2.10.5 with security enabled using self-signed certs.
+Download file [dev-auth-selfsign-tls-4.0.2.yaml](helm-values/dev-auth-selfsign-tls-4.0.2.yaml) to use Pulsar 4.0.2 with TLS enabled using self-signed certs.
 
 **IMPORTANT** Must load the Cert-Manager CRDs before running Helm install
 After Minikube cluster is running normally, enter these command to setup Pulsar with security enabled.
 ```
-mylaptop@DESKTOP:~$ kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.8.0/cert-manager.crds.yaml
-mylaptop@DESKTOP:~$ helm install pulsar datastax-pulsar/pulsar --namespace pulsar --create-namespace -f dev-auth-selfsign-tls.yaml
+mylaptop@DESKTOP:~$ ./pulsar-helm-chart/scripts/cert-manager/install-cert-manager.sh
+mylaptop@DESKTOP:~$ helm install pulsar apache/pulsar --namespace pulsar -f dev-auth-selfsign-tls-4.0.2.yaml
 ```
 # Cleanup and remove Pulsar and Minikube  
 To cleanup and remove the Pulsar Cluster and Minikube env, run the command:
