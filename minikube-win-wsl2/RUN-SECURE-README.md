@@ -23,8 +23,6 @@ pulsar-kube-state-metrics-67945fc86b-98g47             1/1     Running     0    
 pulsar-prometheus-node-exporter-zpfz2                  1/1     Running     0          9m54s
 pulsar-proxy-0                                         1/1     Running     0          9m54s
 pulsar-pulsar-init-smwpq                               0/1     Completed   0          9m54s
-pulsar-pulsar-manager-0                                1/1     Running     0          9m54s
-pulsar-pulsar-manager-init-pdxg9                       0/1     Completed   0          9m54s
 pulsar-toolset-0                                       1/1     Running     0          9m54s
 pulsar-zookeeper-0                                     1/1     Running     0          9m54s
 

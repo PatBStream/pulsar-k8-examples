@@ -126,12 +126,14 @@ k8s.gcr.io/pause:3.4.1
 .
 .
 ```
-# Access Pulsar Admin Console
-Access Pulsar Admin Console from a localhost browser.
+# Access Pulsar Manager
+Access Pulsar Manager from a localhost browser.
 
 **IMPORTANT** Must run "minikube service" before access
+```
+mylaptop@DESKTOP:~$ minikube service -n pulsar pulsar-pulsar-manager
+```
 
-URL for Pulsar Admin Console:  http://localhost
 # Access Grafana Dashboards
 Access Grafana Dashboards from a localhost browser.
 

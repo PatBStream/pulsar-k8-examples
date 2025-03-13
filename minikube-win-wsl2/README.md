@@ -51,10 +51,10 @@ sudo chmod +x ~/minikube/minikube-linux-arm64
 ```
 Run minikube with parameters:
 ```
-minikube start --memory=8192 --cpus=4 --kubernetes-version=v1.23.1
+minikube start --memory=8192 --cpus=4 --kubernetes-version=v1.25.1
 mylaptop@DESKTOP:~$ minikube start --memory=8192 --cpus=4
 😄  minikube v1.23.0 on Ubuntu 20.04 (amd64)
-🆕  Kubernetes 1.23.1 is now available. If you would like to upgrade, specify: --kubernetes-version=v1.25.3
+🆕  Kubernetes 1.25.1 is now available. If you would like to upgrade, specify: --kubernetes-version=v1.25.3
 ✨  Using the docker driver based on existing profile
 👍  Starting control plane node minikube in cluster minikube
 🚜  Pulling base image ...
@@ -65,7 +65,7 @@ mylaptop@DESKTOP:~$ minikube start --memory=8192 --cpus=4
 🌟  Enabled addons: storage-provisioner, default-storageclass
 
 ❗  /usr/local/bin/kubectl is version 1.25.2, which may have incompatibilities with Kubernetes 1.23.1.
-    ▪ Want kubectl v1.23.1? Try 'minikube kubectl -- get pods -A'
+    ▪ Want kubectl v1.25.1? Try 'minikube kubectl -- get pods -A'
 🏄  Done! kubectl is now configured to use "minikube" cluster and "default" namespace by default
 ```
 
