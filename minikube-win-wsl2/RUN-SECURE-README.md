@@ -54,6 +54,36 @@ sh.helm.release.v1.pulsar.v1                                    helm.sh/release.
 ```
 **NOTE** - If TLS is enabled correctly, you will see "pulsar-tls..." in the list of secrets from K8.
 
+# Test Pulsar TLS with Openssl client
+Test TLS connections using Openssl client.
+
+## Connect to Pulsar Toolset Pod
+Connect to the ToolSet Pod and run the Openssl Client command below.  Look for the "CONNECTED" message to ensure TLS is enabled and working.
+```
+mylaptop@DESKTOP:~$ kubectl exec -it -n pulsar pulsar-toolset-0 -- /bin/bash
+
+pulsar-toolset-0:/pulsar$ openssl s_client -connect pulsar-broker:6651 -showcerts -CAfile /pulsar/certs/ca/ca.crt
+
+Connecting to 10.244.0.18
+CONNECTED(00000003)
+Can't use SSL_get_servername
+depth=1 CN=pulsar.svc.cluster.local
+verify return:1
+depth=0 O=pulsar, CN=pulsar-broker
+verify return:1
+---
+Certificate chain
+ 0 s:O=pulsar, CN=pulsar-broker
+   i:CN=pulsar.svc.cluster.local
+   a:PKEY: rsaEncryption, 4096 (bit); sigalg: RSA-SHA256
+   v:NotBefore: Mar 13 19:20:43 2025 GMT; NotAfter: Jun 11 19:20:43 2025 GMT
+-----BEGIN CERTIFICATE-----
+MIIEbTCCA1WgAwIBAgIRALySv/+jndwqUXDb+keGZVcwDQYJKoZIhvcNAQELBQAw
+IzEhMB8GA1UEAxMYcHVsc2FyLnN2Yy5jbHVzdGVyLmxvY2FsMB4XDTI1MDMxMzE5
+
+```
+**NOTE** The connection will timeout due as the expected Pulsar Client data exchange does not offer.  This only test the TLS handshake and connectivity.
+
 After all Pods are running and/or completed, run minikube service command to access Pulsar Manager, Pulsar Proxy, and Grafana/Prometheus Dashboards.
 
 ```
